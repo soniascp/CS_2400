@@ -1,0 +1,58 @@
+import java.util.EmptyStackException;
+public class ArrayStack<T> implements StackInterface<T>{
+    private T[] stack;
+    private static final int DEFAULT_CAPACITY = 40;
+    private static final int MAX_CAPACITY = 10000;
+    private int nextElement;
+
+    public ArrayStack(){
+        this(DEFAULT_CAPACITY);
+
+    }
+
+    public ArrayStack(int desiredCapacity) {
+        if (desiredCapacity > MAX_CAPACITY) {
+            throw new IllegalStateException("Attempt to create a bag " +
+                    "whose capacity exceeds " +
+                    "allowed maximum.");
+
+        }
+        stack = T[] new Object[desiredCapacity];
+    }//if user wants a larger capacity arraystack
+    public void push(T newEntry) {
+        for(int i =0; i<stack.length; ++i){
+            temp[i]= stack[i];
+        }
+        stack = temp;
+    }
+
+    public T pop() {
+        if(isEmpty()){
+            throw new EmptyStackException;
+        }
+        T returnElement = stack[--nextElement];
+        stack[nextElement] = null;
+        return returnElement;
+    }
+
+    public T peek() {
+        if(isEmpty()){
+            throw new EmptyStackException;
+        }
+        return stack[nextElement];
+    }
+
+
+    public boolean isEmpty() {
+        return nextElement == 0;
+    }
+
+
+    public void clear() {
+        while(!isEmpty()){
+            pop();
+        }
+    }
+
+}
+
