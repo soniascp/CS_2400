@@ -1,0 +1,60 @@
+import java.util.EmptyStackException;
+public class LinkedStack<T> implements StackInterface<T> {
+
+    private Node firstNode;
+    public LinkedStack(){
+        firstNode = null;
+    }//default constructor
+
+    public void push(T anEntry){
+        Node<T> temp = new Node<T>(anEntry, firstNode);
+        firstNode = temp;
+
+    }
+
+
+    public T pop(T item) {
+        if(isEmpty())
+            throw new EmptyStackException();
+        Node<T> temp = new Node<T>(item);
+        temp.next = firstNode;
+        firstNode = temp;
+
+        return firstNode.item;
+    }
+
+    public T peek() {
+        if(isEmpty()){
+            throw new EmptyStackException();
+        }
+        else{
+            return firstNode.getItem();
+        }
+    }//check if empty then return the first item in stack
+
+    public boolean isEmpty() {
+        return firstNode == null;
+    }
+
+
+    public void clear() {
+        while(isEmpty()){
+            pop();
+        }
+
+    }
+
+    public class Node{
+        private T item;
+        private Node next;
+        private Node(T item) {
+            this(item, null);
+        }
+
+        private Node(T item, Node next) {
+            this.item = item;
+            this.next = next;
+        }
+
+    }
+}
