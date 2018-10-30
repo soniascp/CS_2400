@@ -1,0 +1,64 @@
+public class InfixToPostfixConverter implements ExpressionConverterInterface {
+    private StackInterface <Character> stackInt;
+    private String postfixExpression;
+
+    public InfixToPostfixConverter(){
+        this(new LinkedStack<Character>());
+    }
+
+    public InfixToPostfixConverter(StackInterface<Character> stack){
+        this.stack = stack;
+    }
+
+    public String convert(String infixExpression) throws InvalidExpressionException{
+        postfixExpression = "";
+        stackInt = new InfixToPostfixConverter();
+
+        int i = 0;
+        while(i< infixExpression.length()){
+            char nextChar = infixExpression.charAt(i);
+            switch(nextChar){
+
+                //create variable case for digits
+
+                case(digit):
+                    postfixExpression = postfixExpression + nextChar;
+                    break;
+                case '^':
+                    stackInt.push(nextChar);
+                    break;
+                case '+' : case '-': case '*': case '/':
+
+                    while(!stackInt.isEmpty() && nextChar<=stackInt.peek()){
+                        postfixExpression = postfixExpression + stackInt.peek();
+                        stackInt.pop();
+                    }
+                    stackInt.push(nextChar);//moves it
+                    break;
+
+                case '(':
+                    stackInt.push(nextChar);
+                    break;
+                    //matching parenth
+                case ')' :
+                    char topOperator = stackInt.pop();
+                    while(topOperator!= '('){
+                        postfixExpression = postfixExpression + topOperator;
+                        topOperator = stackInt.pop();
+                    }
+                    break;
+
+                default: break;
+
+            }//end switch
+
+        }//end while stack length
+        while(!stackInt.isEmpty()){
+            topOperator = stackInt.pop();
+            postfixExpression = postfixExpression+topOperator;
+        }//end while not emptystack
+        return postfixExpression;
+
+    }
+}
+
